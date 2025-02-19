@@ -8,7 +8,7 @@ const app = express();
 
 // CORS configuration
 const corsOptions = {
-  origin: ['https://WenyeZhou51.github.io', 'http://localhost:3000'],
+  origin: ['https://WenyeZhou51.github.io', 'http://localhost:3000', 'https://rcssa-match-api.onrender.com'],
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   credentials: true,
   optionsSuccessStatus: 204
