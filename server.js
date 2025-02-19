@@ -8,15 +8,25 @@ const app = express();
 
 // CORS configuration
 const corsOptions = {
-  origin: ['https://wenyezhou51.github.io', 'http://localhost:3000'],
-  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-  credentials: true,
-  optionsSuccessStatus: 204
+  origin: true, // Allow all origins
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: false // Disable credentials since we don't need them
 };
 
 // Middleware
 app.use(cors(corsOptions));
 app.use(express.json());
+
+// CORS error handler
+app.use((err, req, res, next) => {
+  if (err.name === 'CORSError') {
+    console.error('CORS Error:', err.message);
+    res.status(403).json({ error: 'CORS error: ' + err.message });
+  } else {
+    next(err);
+  }
+});
 
 // MongoDB Connection with retry logic
 const connectDB = async () => {
