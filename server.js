@@ -65,7 +65,19 @@ app.get('/', (req, res) => {
 // Routes
 app.post('/api/users', async (req, res) => {
   try {
+    console.log('Received user data:', req.body); // Log received data
     const newUser = new User(req.body);
+    
+    // Validate the user data
+    const validationError = newUser.validateSync();
+    if (validationError) {
+      console.error('Validation error:', validationError);
+      return res.status(400).json({ 
+        error: 'Validation error', 
+        details: validationError.errors 
+      });
+    }
+    
     await newUser.save();
     
     // Try to find a match immediately

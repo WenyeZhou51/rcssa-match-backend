@@ -21,7 +21,8 @@ const userSchema = new mongoose.Schema({
   },
   graduationYear: {
     type: Number,
-    required: true
+    required: true,
+    set: v => parseInt(v, 10) // Convert string to number
   },
   isMatched: {
     type: Boolean,
